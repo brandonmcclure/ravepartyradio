@@ -18,149 +18,32 @@ set("decoding.buffer_length",10.)
 
 
 # INPUTS
-clock = mksafe(
-    audio_to_stereo(
-        playlist.safe(
-            reload=3600,
-            "/playlists/singles/",
-            mode="randomize",
-            reload_mode="rounds"
-        )
-    )
-)
-
-jingles = mksafe(
-    rewrite_metadata(
-        [
-            ("artist", "Salut c'est cool"),
-            ("title","Jingle (radio Salut c'est cool)"),
-            ("comment","http://www.salutcestcool.com/")
-            ],
-        audio_to_stereo(
-            playlist.safe(
-                reload=1800,
-                "/playlists/jingles",
-                mode="randomize",reload_mode="rounds"
-                )
-            )
-        )
-    )
-#songs_reggae = mksafe(
-#    audio_to_stereo(
-#        rewrite_metadata(
-#            [
-#                ("title", "$(title) (reggae - radio Salut c'est cool)"),
-#                ("comment", "http://www.salutcestcool.com")
-#                ],
-#            playlist.safe(
-#                reload=600,
-#                "/playlists/songs/reggae",
-#                mode="randomize",reload_mode="rounds"
-#                )
-#            )
-#        )
-#    )
-#songs_trance = mksafe(
-#    audio_to_stereo(
-#        rewrite_metadata(
-#            [
-#                ("title", "$(title) (reggae - radio Salut c'est cool)"),
-#                ("comment", "http://www.salutcestcool.com")
-#                ],
-#            playlist.safe(
-#                reload=600,
-#                "/playlists/songs/reggae",
-#                mode="randomize",reload_mode="rounds"
-#                )
-#            )
-#        )
-#    )
-#songs_soiree = mksafe(
-#    audio_to_stereo(
-#        rewrite_metadata(
-#            [
-#                ("title", "$(title) (soiree - radio Salut c'est cool)"),
-#                ("comment", "http://www.salutcestcool.com")
-#                ],
-#            playlist.safe(
-#                reload=600,
-#                "/playlists/songs/soiree",
-#                mode="randomize",reload_mode="rounds"
-#                )
-#            )
-#        )
-#    )
-songs_nuit = mksafe(
+archives = mksafe(
     audio_to_stereo(
         rewrite_metadata(
             [
-                ("title", "$(title) (nuit - radio Salut c'est cool)"),
-                ("comment", "http://www.salutcestcool.com")
+                ("title", "$(title) (Show Archives)"),
+                ("comment", "http://ravepartyradio.org")
                 ],
             playlist.safe(
                 reload=600,
-                "/playlists/songs/nuit",
+                "/playlists/shows",
                 mode="randomize",reload_mode="rounds"
                 )
             )
         )
     )
-#songs_matin = mksafe(
-#    audio_to_stereo(
-#        rewrite_metadata(
-#            [
-#                ("title", "$(title) (matin - radio Salut c'est cool)"),
-#                ("comment", "http://www.salutcestcool.com")
-#                ],
-#            playlist.safe(
-#                reload=600,
-#                "/playlists/songs/matin",
-#                mode="randomize",reload_mode="rounds"
-#                )
-#            )
-#        )
-#    )
-songs_journee = mksafe(
-    audio_to_stereo(
-        rewrite_metadata(
-            [
-                ("title", "$(title) (journee - radio Salut c'est cool)"),
-                ("comment", "http://www.salutcestcool.com")
-                ],
-            playlist.safe(
-                reload=600,
-                "/playlists/songs/journee",
-                mode="randomize",reload_mode="rounds"
-                )
-            )
-        )
-    )
-#songs_pluie = mksafe(
-#    audio_to_stereo(
-#        rewrite_metadata(
-#            [
-#                ("title", "$(title) (pluie - radio Salut c'est cool)"),
-#                ("comment", "http://www.salutcestcool.com")
-#                ],
-#            playlist.safe(
-#                reload=600,
-#                "/playlists/songs/pluie",
-#                mode="randomize",reload_mode="rounds"
-#                )
-#            )
-#        )
-#    )
-live_scc = audio_to_stereo(
+live_rpr = audio_to_stereo(
     rewrite_metadata(
         [
-            ("title", "$(title) (LIVE de SCC - radio Salut c'est cool)"),
-            ("comment", "http://www.salutcestcool.com")
+            ("title", "$(title) (LIVE)"),
+            ("comment", "http://ravepartyradio.org")
             ],
         stretch(
             ratio=interactive.float("test", 1.00005),
             input.harbor(
-                "rscc.live",
-                id="rscc.live",
+                "rpr.live",
+                id="rpr.live",
                 port=5002,
                 password=my_getenv("LIVE_PASSWORD"),
                 user="source",
@@ -172,14 +55,14 @@ live_scc = audio_to_stereo(
 live_guest = audio_to_stereo(
     rewrite_metadata(
         [
-            ("title", "$(title) (LIVE de copains - radio Salut c'est cool)"),
-            ("comment", "http://www.salutcestcool.com")
+            ("title", "$(title) (LIVE guest)"),
+            ("comment", "http://ravepartyradio.org")
             ],
         stretch(
             ratio=interactive.float("test", 1.00005),
             input.harbor(
-                "rscc.live",
-                id="rscc.live",
+                "rpr.live",
+                id="rpr.live",
                 port=5001,
                 password=my_getenv("LIVE_PASSWORD"),
                 user="source",
@@ -188,40 +71,9 @@ live_guest = audio_to_stereo(
             )
         )
     )
-#live = strip_blank(live, length=10., threshold=-50.)
 
 
-# MIXS
-calendar_mix = switch(track_sensitive=true, [
-#        ({ 10h-11h and 1w }, songs_pluie),
-
-#        ({ 18h-23h and 4w }, songs_soiree ),
-#        ({ 18h-23h and 5w }, songs_soiree ),
-#        ({ 18h-23h and 6w }, songs_soiree ),
-
-        ({ 23h-23h59m59s and 4w }, songs_nuit ),
-        ({ 0h-6h and 5w }, songs_nuit ),
-        ({ 23h-23h59m59s and 5w }, songs_nuit ),
-        ({ 0h-6h and 6w }, songs_nuit ),
-        ({ 23h-23h59m59s and 6w }, songs_nuit ),
-        ({ 0h-6h and 7w }, songs_nuit ),
-
-#        ({ 4h-6h }, songs_trance ),
-
-#        ({ 6h-8h }, songs_matin ),
-
-#        ({ 16h20-17h }, songs_reggae ),
-
-        ({ true }, songs_journee)
-])
-
-#mix = random(weights=[1,1], [jingles, songs])
-mix = fade(jingles, calendar_mix)
-mix = add([mix, switch([({0m0s}, clock)])])
-#mix = add([mix, amplify(5., override="replay_gain", live)])
-#mix = fallback(track_sensitive=true, transitions=[custofade], [ mix ])
-#mix = fallback(track_sensitive=false, [multi_live,mix])
-mix = fallback(track_sensitive=false, [live_scc, live_guest, mix])
+mix = fallback(track_sensitive=false, [live_rpr, live_guest, archives])
 mix = store_metadata(size=20,id="history",mix)
 def feedback(metadata)
    system("echo "^ quote(metadata["artist"] ^" - "^ metadata["title"]) ^" > /data/latest.txt")
@@ -237,17 +89,17 @@ output.icecast(
     host=my_getenv("BROADCAST_PORT_5001_TCP_ADDR"),
     port=int_of_string(my_getenv("BROADCAST_PORT_5001_TCP_PORT")),
     %wav,
-    mount="rscc.main",
+    mount="rpr.main",
     mix
     )
 
-title = '%Y-%m-%d, %H:%M:%S - $(if $(artist), "$(artist)", "Artiste inconnu") - $(if $(title),"$(title)", "Emission inconnue")'
+title = '%Y-%m-%d, %H:%M:%S - $(if $(artist), "$(artist)", "Unknown Artist") - $(if $(title),"$(title)", "Unknown")'
 output.file(
     %vorbis,
      reopen_on_metadata=false,
      fallible=true,
-     "/playlists/emissions/scc/" ^ title ^ ".ogg",
-     live_scc
+     "/playlists/emissions/rpr/" ^ title ^ ".ogg",
+     live_rpr
      )
 output.file(
     %vorbis,
