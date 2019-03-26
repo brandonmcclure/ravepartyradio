@@ -66,7 +66,7 @@ services:
       - default
       - service-proxy
     environment:
-      - VIRTUAL_HOST=radio.casse-tete.solutions
+      - VIRTUAL_HOST=icecast.ravepartyradio.org
       - VIRTUAL_PORT=8000
       - ICECAST_SOURCE_PASSWORD
       - ICECAST_ADMIN_PASSWORD
@@ -85,7 +85,7 @@ services:
       - default
       - service-proxy
     environment:
-      - VIRTUAL_HOST=radio-ftp.casse-tete.solutions
+      - VIRTUAL_HOST=ftp.ravepartyradio.org
       - VIRTUAL_PORT=80
       
   ftpd:
@@ -122,7 +122,7 @@ services:
       - ./ftpd/:/etc/pure-ftpd/config
       - ./timezone:/etc/localtime:ro 
     command: /bin/bash -c 'cd /etc/pure-ftpd; rm -f pureftpd.{pdb,passwd}; ln -s config/* .; /usr/sbin/pure-ftpd -c 30   -C 10 -l puredb:/etc/pure-ftpd/pureftpd.pdb -x -E -j -R -d -p 40110:40129'
-      
+
   #btsync:
   #  image: shykes/bittorrentsync
   #  volumes:
@@ -131,7 +131,7 @@ services:
   #  ports:
   #  - 8889:8889
   #  - 55556:55556
-  
+
   admin:
     image: tutum/apache-php
     ports:
@@ -143,18 +143,18 @@ services:
       - default
       - service-proxy
     environment:
-      - VIRTUAL_HOST=radio-admin.casse-tete.solutions
+      - VIRTUAL_HOST=admin.ravepartyradio.org
       - VIRTUAL_PORT=80
       - ICECAST_ADMIN_PASSWORD
       - MAIN_PORT_5000_TCP=tcp://main:5000
     links:
       - main
-  
+
   #piwik:
   #  #image: bprodoehl/piwik
   #  #image: cbeer/piwik
   #  volumes:
-  #  - ./timezone:/etc/localtime:ro 
+  #  - ./timezone:/etc/localtime:ro
   #  image: marvambass/piwik
   #  links:
   #  - piwikmysql:mysql
@@ -166,7 +166,7 @@ services:
   #  - PIWIK_PASSWORD
   #  - PIWIK_MYSQL_PASSWORD
   #  - SITE_URL
-  
+
   #piwikcron:
   #  image: marvambass/piwik
   #  environment:
@@ -174,18 +174,18 @@ services:
   #  - PIWIK_PASSWORD
   #  entrypoint: /bin/bash
   #  volumes:
-  #  - ./timezone:/etc/localtime:ro 
+  #  - ./timezone:/etc/localtime:ro
   #  - ./logs/icecast2:/data/logs/icecast2
   #  command: -c 'apt-get -y install python; while true; do python /piwik/misc/log-analytics/import_logs.py --show-pro  gress --url=http://$HOSTNAME:12346/piwik/ --idsite=1 --recorders=8 --enable-http-errors --log-format-name=icecast2 -  -strip-query-string /data/logs/icecast2/access.log --login=admin --password=$PIWIK_PASSWORD; sleep 10; done'
-  
+
   #piwikmysql:
   #  image: mysql
   #  environment:
   #  - MYSQL_ROOT_PASSWORD
   #  volumes:
-  #  - ./timezone:/etc/localtime:ro 
+  #  - ./timezone:/etc/localtime:ro
   #  - ./mysql:/var/lib/mysql
-  
+
   #dashing:
   #  image: frvi/dashing
   #  ports:
@@ -193,7 +193,7 @@ services:
   #  #command: /bin/bash /run.sh
   #  #command: /usr/local/bundle/bin/dashing start
   #  volumes:
-  #  - ./timezone:/etc/localtime:ro 
+  #  - ./timezone:/etc/localtime:ro
   ##  - ./dashing:/dashing
   #  - ./dashing/config.ru:/config/config.ru
   #  - ./dashing/jobs:/jobs
@@ -205,7 +205,7 @@ services:
   #  - ICECAST_ADMIN_PASSWORD
   #  - ADMIN_IFRAME_URL
   #  - GEMS=addressable
-  
+
   #jordy:
   #  image: moul/triplie-ng
   #  volumes:
@@ -214,7 +214,7 @@ services:
   #  image: moul/triplie-ng
   #  volumes:
   #  - ./jordy3000:/data
-    
+
   #glados:
   #  restart: always
   #  build: GLaDOS
