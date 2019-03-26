@@ -44,7 +44,7 @@ services:
     image: moul/liquidsoap
     volumes:
       - ./config:/config
-      - ./playlists/failures:/playlists/failures
+      - ./playlists:/playlists
       - ./timezone:/etc/localtime:ro 
     command: /bin/bash -xc 'env; /supervisor.sh liquidsoap -v --debug /config/broadcast.liq'
     environment:
