@@ -1,0 +1,126 @@
+<!doctype html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Rave Party Radio</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="msapplication-TileColor" content="#000000">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#000000">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+</head>
+
+<style>
+  body, html{
+    height: 100%;
+    background-color: black;
+    margin:0;
+    padding:0;
+  }
+  section {
+    width: 100%;
+    height: 85%;
+  }
+  div#status {
+    height: 5%;
+    text-align: center;
+    color: #63500b;
+    font-size: 18px;
+    font-family: Roboto;
+    font-weight: bold;
+    padding: 10px;
+  }
+  div#chat {
+    height: 10%;
+    text-align: center;
+  }
+  div#myradiodivcontainer {
+    width: 100%;
+    height: 100%;
+  }
+  a {
+    text-decoration: none;
+    font-size: 18px;
+    font-family: Roboto;
+    color: #63500b;
+    display: inline-block;
+    border: #63500b;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #63500b;
+    padding: 10px 25px;
+  }
+</style>
+
+<body>
+
+  <section id="wrapper">
+      <div id="status">
+          <script src="http://scripts.myradiostream.com/s8/57132/status.js"></script>
+        </div>
+      <div id="chat">
+          <a href="chat.html" target="_blank">Join the Chat</a>
+      </div>
+      <div id="myradiodivcontainer" >
+          Loading Player...
+      </div>
+</section>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="js/nativeflashradiov4.js"></script>
+    
+  <script>
+  $("#myradiodivcontainer").flashradio({
+	token: "c2J3ZnFic3V6c2JlanAvcHNoAQ==",
+	userinterface: "big",
+	backgroundcolor: "#000000",
+	themecolor: "#e5c00d", 
+	themefontcolor: "#63500b", 
+	startvolume: "100", 
+	radioname: "", 
+	scroll: "auto", 
+	autoplay: "false", 
+	useanalyzer: "fake", 
+	analyzertype: "5", 
+	usecover: "true", 
+	usestreamcorsproxy: "false", 
+	affiliatetoken: "1000lIPN", 
+	debug: "false", 
+	ownsongtitleurl: "", 
+	radiocover: "img/smiley_transparent.png", 
+	songgooglefontname: "Roboto:700", 
+  songfontname: "Roboto",
+	titlegooglefontname: "Roboto:700", 
+	titlefontname: "Roboto", 
+	corsproxy: "https://html5radioplayer5eu.herokuapp.com/?q=", 
+	streamprefix: "", 
+	mountpoint: "/ravepartyradio-192.mp3", 
+	radiouid: "", 
+	apikey: "",
+	radiojar: "",  
+	streamid: "1", 
+	streampath: "/live", 
+	streamtype: "icecast2", 
+	streamurl: "http://51.15.220.44:8000", 
+	songinformationinterval: "5000"
+});
+</script>
+
+</body>
+</html>
