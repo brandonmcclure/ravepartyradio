@@ -55,11 +55,8 @@ input = mksafe(fallback(track_sensitive=false, [ harbor_input, default ]))
 
 
 # OUTPUTS
-outputs(%mp3(bitrate=64), mount="/ravepartyradio-64.mp3", input)
 outputs(%mp3(bitrate=128), mount="/ravepartyradio-128.mp3", input)
-outputs(%mp3(bitrate=160), mount="/ravepartyradio-160.mp3", input)
 outputs(%mp3(bitrate=192), mount="/ravepartyradio-192.mp3", input)
 outputs(%aac(bitrate=128), mount="/ravepartyradio-128.aac", input)
-outputs(%aac(bitrate=160), mount="/ravepartyradio-160.aac", input)
 outputs(%aac(bitrate=192), mount="/ravepartyradio-192.aac", input)
 outputs(%vorbis, mount="/ravepartyradio.ogg", input)
