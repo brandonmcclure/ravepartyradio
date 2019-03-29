@@ -16,3 +16,4 @@ triplie.db
 *.zip
 GLaDOS
 .idea
+.DS_Store
