@@ -63,7 +63,7 @@ services:
   webftp:
     image: httpd
     volumes:
-      - ./site:/usr/local/apache2/htdoocs/site
+      - ./site:/usr/local/apache2/htdocs/site
       - ./playlists:/usr/local/apache2/htdocs/playlists
       - ./trucs:/usr/local/apache2/htdocs/trucs
     networks:
