@@ -22,25 +22,6 @@ services:
       - 8022:5002
       - 127.0.0.1:5000:5000
   
-  #testing:
-  #  image: moul/liquidsoap
-  #  volumes:
-  #  - ./config:/config
-  #  - ./playlists:/playlists
-  #  - ./data:/data
-  #  - /etc/localtime:/etc/localtime:ro 
-  #  command: /bin/bash -xc 'env; /supervisor.sh liquidsoap -v --debug /config/testing.liq'
-  #  environment:
-  #  - HARBOR_PASSWORD
-  #  - LIVE_PASSWORD
-  #  - ICECAST_SOURCE_PASSWORD
-  #  links:
-  #  - icecast
-  #  ports:
-  #  - 8023:5001
-  #  - 8024:5002
-  #  - 127.0.0.1:5003:5000
-  
   broadcast:
     image: moul/liquidsoap
     volumes:
@@ -146,80 +127,6 @@ services:
     env_file: .env
     links:
       - main
-
-  #piwik:
-  #  #image: bprodoehl/piwik
-  #  #image: cbeer/piwik
-  #  volumes:
-  #  - ./timezone:/etc/localtime:ro
-  #  image: marvambass/piwik
-  #  links:
-  #  - piwikmysql:mysql
-  #  ports:
-  #  - 12346:80
-  #  - 12347:443
-  #  environment:
-  #  - PIWIK_MYSQL_USER=root
-  #  - PIWIK_PASSWORD
-  #  - PIWIK_MYSQL_PASSWORD
-  #  - SITE_URL
-
-  #piwikcron:
-  #  image: marvambass/piwik
-  #  environment:
-  #  - HOSTNAME
-  #  - PIWIK_PASSWORD
-  #  entrypoint: /bin/bash
-  #  volumes:
-  #  - ./timezone:/etc/localtime:ro
-  #  - ./logs/icecast2:/data/logs/icecast2
-  #  command: -c 'apt-get -y install python; while true; do python /piwik/misc/log-analytics/import_logs.py --show-pro  gress --url=http://$HOSTNAME:12346/piwik/ --idsite=1 --recorders=8 --enable-http-errors --log-format-name=icecast2 -  -strip-query-string /data/logs/icecast2/access.log --login=admin --password=$PIWIK_PASSWORD; sleep 10; done'
-
-  #piwikmysql:
-  #  image: mysql
-  #  environment:
-  #  - MYSQL_ROOT_PASSWORD
-  #  volumes:
-  #  - ./timezone:/etc/localtime:ro
-  #  - ./mysql:/var/lib/mysql
-
-  #dashing:
-  #  image: frvi/dashing
-  #  ports:
-  #  - 0.0.0.0:12349:3030
-  #  #command: /bin/bash /run.sh
-  #  #command: /usr/local/bundle/bin/dashing start
-  #  volumes:
-  #  - ./timezone:/etc/localtime:ro
-  ##  - ./dashing:/dashing
-  #  - ./dashing/config.ru:/config/config.ru
-  #  - ./dashing/jobs:/jobs
-  #  - ./dashing/dashboards:/dashboards
-  #  - ./dashing/widgets:/widgets
-  #  links:
-  #  - icecast
-  #  environment:
-  #  - ICECAST_ADMIN_PASSWORD
-  #  - ADMIN_IFRAME_URL
-  #  - GEMS=addressable
-
-  #jordy:
-  #  image: moul/triplie-ng
-  #  volumes:
-  #  - ./jordy:/data
-  #jordy3000:
-  #  image: moul/triplie-ng
-  #  volumes:
-  #  - ./jordy3000:/data
-
-  #glados:
-  #  restart: always
-  #  build: GLaDOS
-  #  volumes:
-  #  - ./GLaDOS/config:/usr/src/app/config
-  #  - ./GLaDOS/lib:/usr/src/app/lib
-  #  - ./GLaDOS/scripts:/usr/src/app/scripts
-  #  - ./GLaDOS/data:/usr/src/app/data
 
 networks:
   service-proxy:
