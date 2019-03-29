@@ -76,7 +76,7 @@ services:
       - ICECAST_RELAY_PASSWORD
     env_file: .env
     ports:
-      - 8000
+      - 8000:8000
     restart: always
   
   webftp:
@@ -90,7 +90,9 @@ services:
     environment:
       - VIRTUAL_HOST=ftp.ravepartyradio.org
       - VIRTUAL_PORT=80
-      
+    ports:
+      - 8024:80
+
   ftpd:
     image: stilliard/pure-ftpd
     ports:
@@ -126,19 +128,10 @@ services:
       - ./timezone:/etc/localtime:ro 
     command: /bin/bash -c 'cd /etc/pure-ftpd; rm -f pureftpd.{pdb,passwd}; ln -s config/* .; /usr/sbin/pure-ftpd -c 30   -C 10 -l puredb:/etc/pure-ftpd/pureftpd.pdb -x -E -j -R -d -p 40110:40129'
 
-  #btsync:
-  #  image: shykes/bittorrentsync
-  #  volumes:
-  #  - btsync:/btsync
-  #  - playlists:/data
-  #  ports:
-  #  - 8889:8889
-  #  - 55556:55556
-
   admin:
     image: tutum/apache-php
     ports:
-      - 80
+      - 80:80
     volumes:
       - ./timezone:/etc/localtime:ro 
       - ./admin:/app
