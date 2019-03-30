@@ -121,7 +121,7 @@ services:
       - service-proxy
     environment:
       - VIRTUAL_HOST=admin.ravepartyradio.org
-      - VIRTUAL_PORT=80
+      - VIRTUAL_PORT=8080
       - ICECAST_ADMIN_PASSWORD
       - MAIN_PORT_5000_TCP=tcp://main:5000
     env_file: .env
@@ -133,12 +133,13 @@ services:
     ports:
       - 80:80
     volumes:
-      - ./site:/usr/local/apache2/htdocs
+      - ./site:/app
     networks:
+      - default
       - service-proxy
-    environment:
-      - VIRTUAL_HOST=ravepartyradio.org
-      - VIRTUAL_PORT=80
+#    environment:
+#      - VIRTUAL_HOST=ravepartyradio.org
+#      - VIRTUAL_PORT=80
 
 networks:
   service-proxy:
