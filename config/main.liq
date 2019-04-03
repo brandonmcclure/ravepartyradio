@@ -23,7 +23,7 @@ archives = mksafe(
         rewrite_metadata(
             [
                 ("artist", "$(artist)"),
-                ("title", "$(title) (Show Archives)"),
+                ("title", "$(title) (Show Archives & DJ Mixes)"),
                 ("comment", "http://ravepartyradio.org")
                 ],
             playlist.safe(
@@ -37,7 +37,6 @@ archives = mksafe(
 live_rpr = audio_to_stereo(
     rewrite_metadata(
         [
-            ("artist", "$(artist)"),
             ("title", "$(title) (LIVE)"),
             ("comment", "http://ravepartyradio.org")
             ],
