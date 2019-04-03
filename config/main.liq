@@ -95,18 +95,18 @@ output.icecast(
     mix
     )
 
-title = '%Y-%m-%d, %H:%M:%S - $(if $(artist), "$(artist)", "Unknown Artist") - $(if $(title),"$(title)", "Unknown")'
+file = '%Y-%m-%d %H%M%S - $(if $(artist), "$(artist)", "Unknown Artist") - $(if $(title),"$(title)", "Unknown")'
 output.file(
     %vorbis,
      reopen_on_metadata=false,
      fallible=true,
-     "/playlists/emissions/rpr/" ^ title ^ ".ogg",
+     "/playlists/emissions/rpr/" ^ file ^ ".ogg",
      live_rpr
      )
 output.file(
     %vorbis,
      reopen_on_metadata=false,
      fallible=true,
-     "/playlists/emissions/guest/" ^ title ^ ".ogg",
+     "/playlists/emissions/guest/" ^ file ^ ".ogg",
      live_guest
      )
