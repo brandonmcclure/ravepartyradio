@@ -33,7 +33,7 @@ default = mksafe(
     rewrite_metadata(
         [
             ("artist", "Rave Party Radio"),
-            ("title", "Back Soon!"),
+            ("title", "DJ Unknown"),
             ("comment", "http://ravepartyradio.org")
             ],
         audio_to_stereo(
