@@ -23,7 +23,7 @@ archives = mksafe(
         rewrite_metadata(
             [
                 ("artist", "$(artist)"),
-                ("title", "$(title) (Show Archives & DJ Mixes)"),
+                ("title", "$(title)"),
                 ("comment", "http://ravepartyradio.org")
                 ],
             playlist.safe(
