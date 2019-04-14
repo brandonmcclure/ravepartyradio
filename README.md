@@ -18,6 +18,18 @@ The services are defined in the `docker-compose.yml` file, and consist of an ice
 containers, each with its own config file in the `config` directory. There is also a php container, which serves the 
 website.
 
+### Configuring the services
+
+Create a `.env` file to store the passwords, assigning values to each of the following environment variables:
+
+```bash
+HARBOR_PASSWORD=
+ICECAST_SOURCE_PASSWORD=
+ICECAST_ADMIN_PASSWORD=
+ICECAST_PASSWORD=
+LIVE_PASSWORD=
+```
+
 ### Starting/stopping the services
 
 In the project foler, to start the services:
