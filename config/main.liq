@@ -22,8 +22,8 @@ archives = mksafe(
     audio_to_stereo(
         rewrite_metadata(
             [
-                ("artist", "$(artist)"),
-                ("title", "$(title)"),
+                ("artist", "$(artist) ~ $(title)"),
+                ("title", "A R C H I V E S"),
                 ("comment", "http://ravepartyradio.org")
                 ],
             playlist.safe(
@@ -37,7 +37,8 @@ archives = mksafe(
 live_rpr = audio_to_stereo(
     rewrite_metadata(
         [
-            ("title", "$(title) (LIVE)"),
+            ("artist", "&nbsp;$(title)&nbsp;"),
+            ("title", "V I R T U A L&nbsp;&nbsp;&nbsp;R A V E"),
             ("comment", "http://ravepartyradio.org")
             ],
         stretch(
