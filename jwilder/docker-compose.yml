@@ -1,0 +1,33 @@
+version: '2'
+
+services:
+  nginx-proxy-letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    volumes_from:
+      - nginx-proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    ports:
+      - 443:443
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - /etc/nginx/certs
+      - /etc/nginx/vhost.d
+      - /usr/share/nginx/html
+
+  icecast:
+    image: jwilder/whoami
+    environment:
+      - VIRTUAL_HOST=icecast.ravepartyradio.org
+      - LETSENCRYPT_HOST=icecast.ravepartyradio.org
+      - LETSENCRYPT_EMAIL=smithcolina@hotmail.com
+
+  ftp:
+    image: jwilder/whoami
+    environment:
+      - VIRTUAL_HOST=ftp.ravepartyradio.org
+      - LETSENCRYPT_HOST=ftp.ravepartyradio.org
+      - LETSENCRYPT_EMAIL=smithcolina@hotmail.com
