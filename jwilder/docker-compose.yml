@@ -54,6 +54,7 @@ services:
   letsencrypt:
     image: jrcs/letsencrypt-nginx-proxy-companion
     depends_on:
+      - nginx-proxy
       - icecast
       - ftp
       - www
