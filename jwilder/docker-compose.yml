@@ -1,8 +1,10 @@
-version: '2'
+version: '3'
 
 services:
-  nginx-proxy-letsencrypt:
+  letsencrypt:
     image: jrcs/letsencrypt-nginx-proxy-companion
+    depends_on:
+      - nginx-proxy
     volumes_from:
       - nginx-proxy
     volumes:
@@ -10,6 +12,7 @@ services:
 
   nginx-proxy:
     image: jwilder/nginx-proxy
+    restart: always
     ports:
       - 80:80
       - 443:443
@@ -17,27 +20,40 @@ services:
       - DEFAULT_HOST=www.ravepartyradio.org
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
-      - /etc/nginx/certs
-      - /etc/nginx/vhost.d
-      - /usr/share/nginx/html
+      - certs:/etc/nginx/certs
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
 
   icecast:
     image: jwilder/whoami
+    ports:
+      8001:8000
     environment:
       - VIRTUAL_HOST=icecast.ravepartyradio.org
+      - VIRTUAL_PORT=8001
       - LETSENCRYPT_HOST=icecast.ravepartyradio.org
       - LETSENCRYPT_EMAIL=smithcolina@hotmail.com
 
   ftp:
     image: jwilder/whoami
+    ports:
+      8002:8000
     environment:
       - VIRTUAL_HOST=ftp.ravepartyradio.org
+      - VIRTUAL_PORT=8002
       - LETSENCRYPT_HOST=ftp.ravepartyradio.org
       - LETSENCRYPT_EMAIL=smithcolina@hotmail.com
 
   www:
     image: jwilder/whoami
+    ports:
+      8003:8000
     environment:
       - VIRTUAL_HOST=www.ravepartyradio.org
+      - VIRTUAL_PORT=8003
       - LETSENCRYPT_HOST=www.ravepartyradio.org
       - LETSENCRYPT_EMAIL=smithcolina@hotmail.com
+
+volumes:
+  vhost:
+  html:
