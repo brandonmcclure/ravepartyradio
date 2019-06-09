@@ -1,15 +1,6 @@
 version: '2'
 
 services:
-  letsencrypt:
-    image: jrcs/letsencrypt-nginx-proxy-companion
-    depends_on:
-      - nginx-proxy
-    volumes_from:
-      - nginx-proxy
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-
   nginx-proxy:
     image: jwilder/nginx-proxy
     restart: always
@@ -28,6 +19,8 @@ services:
     image: jwilder/whoami
     ports:
       - "8001:8000"
+    depends_on:
+      - nginx-proxy
     environment:
       - VIRTUAL_HOST=icecast.ravepartyradio.org
       - VIRTUAL_PORT=8001
@@ -38,6 +31,8 @@ services:
     image: jwilder/whoami
     ports:
       - "8002:8000"
+    depends_on:
+      - nginx-proxy
     environment:
       - VIRTUAL_HOST=ftp.ravepartyradio.org
       - VIRTUAL_PORT=8002
@@ -48,8 +43,22 @@ services:
     image: jwilder/whoami
     ports:
       - "8003:8000"
+    depends_on:
+      - nginx-proxy
     environment:
       - VIRTUAL_HOST=www.ravepartyradio.org
       - VIRTUAL_PORT=8003
       - LETSENCRYPT_HOST=www.ravepartyradio.org
       - LETSENCRYPT_EMAIL=smithcolina@hotmail.com
+
+  letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    depends_on:
+      - icecast
+      - ftp
+      - www
+    volumes_from:
+      - nginx-proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
