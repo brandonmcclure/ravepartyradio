@@ -14,8 +14,8 @@ services:
     image: jwilder/nginx-proxy
     restart: always
     ports:
-      - 80:80
-      - 443:443
+      - "80:80"
+      - "443:443"
     environment:
       - DEFAULT_HOST=www.ravepartyradio.org
     volumes:
@@ -27,7 +27,7 @@ services:
   icecast:
     image: jwilder/whoami
     ports:
-      8001:8000
+      - "8001:8000"
     environment:
       - VIRTUAL_HOST=icecast.ravepartyradio.org
       - VIRTUAL_PORT=8001
@@ -37,7 +37,7 @@ services:
   ftp:
     image: jwilder/whoami
     ports:
-      8002:8000
+      - "8002:8000"
     environment:
       - VIRTUAL_HOST=ftp.ravepartyradio.org
       - VIRTUAL_PORT=8002
@@ -47,7 +47,7 @@ services:
   www:
     image: jwilder/whoami
     ports:
-      8003:8000
+      - "8003:8000"
     environment:
       - VIRTUAL_HOST=www.ravepartyradio.org
       - VIRTUAL_PORT=8003
