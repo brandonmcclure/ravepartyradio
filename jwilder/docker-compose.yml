@@ -20,9 +20,9 @@ services:
       - DEFAULT_HOST=www.ravepartyradio.org
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
-      - certs:/etc/nginx/certs
-      - vhost:/etc/nginx/vhost.d
-      - html:/usr/share/nginx/html
+      - /etc/nginx/certs
+      - /etc/nginx/vhost.d
+      - /usr/share/nginx/html
 
   icecast:
     image: jwilder/whoami
@@ -53,8 +53,3 @@ services:
       - VIRTUAL_PORT=8003
       - LETSENCRYPT_HOST=www.ravepartyradio.org
       - LETSENCRYPT_EMAIL=smithcolina@hotmail.com
-
-volumes:
-  vhost:
-  html:
-  certs:
