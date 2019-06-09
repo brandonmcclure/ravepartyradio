@@ -4,7 +4,7 @@ services:
   nginx:
     image: nginx:1.15-alpine
     ports:
-      - "443:443"
+      - "80:80"
     volumes:
       - ./nginx:/etc/nginx/conf.d
       - ./certbot/conf:/etc/letsencrypt
