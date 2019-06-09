@@ -17,6 +17,8 @@ services:
     networks:
       - default
       - service-proxy
+    links:
+      - site
 
   letsencrypt:
     image: jrcs/letsencrypt-nginx-proxy-companion
