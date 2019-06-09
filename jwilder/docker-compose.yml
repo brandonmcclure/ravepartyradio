@@ -13,6 +13,8 @@ services:
     ports:
       - 80:80
       - 443:443
+    environment:
+      - DEFAULT_HOST=www.ravepartyradio.org
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - /etc/nginx/certs
@@ -31,4 +33,11 @@ services:
     environment:
       - VIRTUAL_HOST=ftp.ravepartyradio.org
       - LETSENCRYPT_HOST=ftp.ravepartyradio.org
+      - LETSENCRYPT_EMAIL=smithcolina@hotmail.com
+
+  www:
+    image: jwilder/whoami
+    environment:
+      - VIRTUAL_HOST=www.ravepartyradio.org
+      - LETSENCRYPT_HOST=www.ravepartyradio.org
       - LETSENCRYPT_EMAIL=smithcolina@hotmail.com
