@@ -10,6 +10,7 @@ services:
     environment:
       - DEFAULT_HOST=www.ravepartyradio.org
     volumes:
+      - ./nginx/extra.conf:/etc/nginx/conf.d/extra.conf
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - /etc/nginx/certs
       - /etc/nginx/vhost.d
@@ -144,7 +145,7 @@ services:
     environment:
       - VIRTUAL_HOST=www.ravepartyradio.org
       - VIRTUAL_PORT=8181
-      - LETSENCRYPT_HOST=www.ravepartyradio.org
+      - LETSENCRYPT_HOST=ravepartyradio.org,www.ravepartyradio.org
       - LETSENCRYPT_EMAIL
     volumes:
       - ./site:/app
