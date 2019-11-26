@@ -1,39 +1,35 @@
 version: '2'
 
 services:
-  nginx:
+  nginx-proxy:
     image: jwilder/nginx-proxy
-    restart: always
     ports:
-      - 80:80
-      - 443:443
-    environment:
-      - DEFAULT_HOST=www.ravepartyradio.org
+      - "80:80"
+      - "443:443"
     volumes:
-      - ./nginx/extra.conf:/etc/nginx/conf.d/extra.conf
-      - /var/run/docker.sock:/tmp/docker.sock:ro
-      - /etc/nginx/certs
-      - /etc/nginx/vhost.d
-      - /usr/share/nginx/html
+      - "/etc/nginx/vhost.d"
+      - "/usr/share/nginx/html"
+      - "/var/run/docker.sock:/tmp/docker.sock:ro"
+      - "/etc/nginx/certs"
     networks:
       - default
       - service-proxy
     links:
       - site
 
-  letsencrypt:
-    image: jrcs/letsencrypt-nginx-proxy-companion
+  letsencrypt-nginx-proxy-companion:
+    image: jrcs/letsencrypt-nginx-proxy-companion:v1.11
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
     depends_on:
-      - nginx
+      - nginx-proxy
       - icecast
       - ftp
       - site
       - main
       - admin
     volumes_from:
-      - nginx
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - nginx-proxy
 
   main:
     image: moul/liquidsoap
