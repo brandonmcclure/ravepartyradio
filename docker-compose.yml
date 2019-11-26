@@ -17,7 +17,7 @@ services:
     links:
       - site
 
-
+  letsencrypt-nginx-proxy-companion:
     image: jrcs/letsencrypt-nginx-proxy-companion:v1.12
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
