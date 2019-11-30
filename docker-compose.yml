@@ -139,7 +139,7 @@ services:
     ports:
       - 8181:80
     environment:
-      - VIRTUAL_HOST=www.ravepartyradio.org
+      - VIRTUAL_HOST=ravepartyradio.org,www.ravepartyradio.org
       - VIRTUAL_PORT=8181
       - LETSENCRYPT_HOST=ravepartyradio.org,www.ravepartyradio.org
       - LETSENCRYPT_EMAIL
