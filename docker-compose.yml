@@ -24,6 +24,7 @@ services:
     depends_on:
       - nginx-proxy
       - icecast
+      - shoutcast
       - ftp
       - site
       - main
@@ -54,6 +55,7 @@ services:
     ports:
       - 8021:5001
       - 8022:5002
+      - 8023:5003
       - 127.0.0.1:5000:5000
   
   broadcast:
@@ -68,9 +70,13 @@ services:
       - ICECAST_SOURCE_PASSWORD
       - ICECAST_PORT_8000_TCP_ADDR=icecast
       - ICECAST_PORT_8000_TCP_PORT=8000
+      - SHOUTCAST_PASSWORD
+      - SHOUTCAST_PORT_8000_TCP_ADDR=shoutcast
+      - SHOUTCAST_PORT_8000_TCP_PORT=8010
     env_file: .env
     links:
       - icecast
+      - shoutcast
     ports:
       - 5001
   
@@ -91,11 +97,32 @@ services:
       - ICECAST_ADMIN_PASSWORD
       - ICECAST_PASSWORD
       - ICECAST_RELAY_PASSWORD
+      - SHOUTCAST_PASSWORD
     env_file: .env
     ports:
       - 8000:8000
     restart: always
   
+  shoutcast:
+    image: vimagick/shoutcast
+    volumes:
+      - ./shoutcast/sc_serv.conf:/opt/shoutcast/sc_serv.conf
+      - ./logs
+    networks:
+      - default
+      - service-proxy
+    environment:
+      - VIRTUAL_HOST=shoutcast.ravepartyradio.org
+      - VIRTUAL_PORT=8010
+      - LETSENCRYPT_HOST=shoutcast.ravepartyradio.org
+      - LETSENCRYPT_EMAIL
+      - SHOUTCAST_PASSWORD
+    env_file: .env
+    ports:
+      - 8010:8000
+      - 8011:8001
+    restart: always
+
   ftp:
     image: httpd
     ports:
