@@ -15,21 +15,31 @@ set("audio.converter.samplerate.libsamplerate.quality","best")
 set("buffering.path","/tmp")
 set("decoding.buffer_length",10.)
 
+description="Rave Party Radio"
+genre="Electronica"
+url="http://ravepartyradio.org"
 
 # FUNCTIONS
-rpr_out = output.icecast(description="Rave Party Radio", genre="Electronica", url="http://ravepartyradio.org")
-output_docker_env.icecast = rpr_out(
+icecast_out=output.icecast(description=description, genre=genre, url=url)
+shoutcast_out=output.shoutcast(name=description, genre=genre, url=url)
+output_docker_env.icecast = icecast_out(
     host=my_getenv("ICECAST_PORT_8000_TCP_ADDR"),
     port=int_of_string(my_getenv("ICECAST_PORT_8000_TCP_PORT")),
     password=my_getenv("ICECAST_SOURCE_PASSWORD")
 )
+output_docker_env.shoutcast = shoutcast_out(
+    host=my_getenv("SHOUTCAST_PORT_8000_TCP_ADDR"),
+    port=int_of_string(my_getenv("SHOUTCAST_PORT_8000_TCP_PORT")),
+    password=my_getenv("SHOUTCAST_PASSWORD")
+)
 def outputs(encoder, ~mount, input)
     output_docker_env.icecast(encoder, mount=mount, input)
+    output_docker_env.shoutcast(encoder, input)
 end
 
 
 # MIXS
-default = mksafe(
+default=mksafe(
     rewrite_metadata(
         [
             ("artist", "Rave Party Radio"),
@@ -46,17 +56,14 @@ default = mksafe(
         )
     )
 
-harbor_input = input.harbor("rpr.main", port=5001, password=my_getenv("HARBOR_PASSWORD"))
-input = mksafe(fallback(track_sensitive=false, [ harbor_input, default ]))
+harbor_input=input.harbor("rpr.main", port=5001, password=my_getenv("HARBOR_PASSWORD"))
+input=mksafe(fallback(track_sensitive=false, [ harbor_input, default ]))
 
 
 # NORMALIZE
-#input = audio_process(input)
+#input=audio_process(input)
 
 
 # OUTPUTS
-outputs(%mp3(bitrate=128), mount="/ravepartyradio-128.mp3", input)
 outputs(%mp3(bitrate=192), mount="/ravepartyradio-192.mp3", input)
-outputs(%aac(bitrate=128), mount="/ravepartyradio-128.aac", input)
-outputs(%aac(bitrate=192), mount="/ravepartyradio-192.aac", input)
-outputs(%vorbis, mount="/ravepartyradio.ogg", input)
+
