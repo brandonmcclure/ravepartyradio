@@ -72,7 +72,7 @@ services:
       - ICECAST_PORT_8000_TCP_PORT=8000
       - SHOUTCAST_PASSWORD
       - SHOUTCAST_PORT_8000_TCP_ADDR=shoutcast
-      - SHOUTCAST_PORT_8000_TCP_PORT=8010
+      - SHOUTCAST_PORT_8000_TCP_PORT=8000
     env_file: .env
     links:
       - icecast
@@ -97,7 +97,6 @@ services:
       - ICECAST_ADMIN_PASSWORD
       - ICECAST_PASSWORD
       - ICECAST_RELAY_PASSWORD
-      - SHOUTCAST_PASSWORD
     env_file: .env
     ports:
       - 8000:8000
