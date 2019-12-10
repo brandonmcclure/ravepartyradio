@@ -69,13 +69,9 @@ services:
       - ICECAST_SOURCE_PASSWORD
       - ICECAST_PORT_8000_TCP_ADDR=icecast
       - ICECAST_PORT_8000_TCP_PORT=8000
-      - SHOUTCAST_PASSWORD
-      - SHOUTCAST_PORT_8000_TCP_ADDR=shoutcast
-      - SHOUTCAST_PORT_8000_TCP_PORT=8000
     env_file: .env
     links:
       - icecast
-      - shoutcast
     ports:
       - 5001
   
