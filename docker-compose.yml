@@ -24,7 +24,6 @@ services:
     depends_on:
       - nginx-proxy
       - icecast
-      - shoutcast
       - ftp
       - site
       - main
@@ -102,26 +101,6 @@ services:
       - 8000:8000
     restart: always
   
-  shoutcast:
-    image: vimagick/shoutcast
-    volumes:
-      - ./shoutcast/sc_serv.conf:/opt/shoutcast/sc_serv.conf
-      - ./logs
-    networks:
-      - default
-      - service-proxy
-    environment:
-      - VIRTUAL_HOST=shoutcast.ravepartyradio.org
-      - VIRTUAL_PORT=8010
-      - LETSENCRYPT_HOST=shoutcast.ravepartyradio.org
-      - LETSENCRYPT_EMAIL
-      - SHOUTCAST_PASSWORD
-    env_file: .env
-    ports:
-      - 8010:8000
-      - 8011:8001
-    restart: always
-
   ftp:
     image: httpd
     ports:

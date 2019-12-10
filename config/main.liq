@@ -95,14 +95,6 @@ output.icecast(
     mix
     )
 
-output.shoutcast(
-    %mp3,
-    host=my_getenv("BROADCAST_PORT_5001_TCP_ADDR"),
-    port=int_of_string(my_getenv("BROADCAST_PORT_5001_TCP_PORT")),
-    password=my_getenv("SHOUTCAST_PASSWORD"),
-    mix
-    )
-
 file = '%Y-%m-%d %H%M%S - $(if $(artist), "$(artist)", "Unknown Artist") - $(if $(title),"$(title)", "Unknown")'
 output.file(
     %vorbis,
