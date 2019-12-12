@@ -73,7 +73,7 @@ services:
     links:
       - icecast
     ports:
-      - 5001
+      - 5001:5001
   
   icecast:
     image: cheekychops/icecast
