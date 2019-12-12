@@ -76,7 +76,7 @@ services:
       - 5001
   
   icecast:
-    image: moul/icecast
+    image: cheekychops/icecast
     volumes:
       - ./logs/icecast2:/var/log/icecast2
       - ./timezone:/etc/localtime:ro 
