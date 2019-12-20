@@ -22,7 +22,7 @@ archives = mksafe(
     audio_to_stereo(
         rewrite_metadata(
             [
-                ("artist", "$(artist) ~ $(title)"),
+                ("artist", "$(artist)&nbsp;~&nbsp;$(title)"),
                 ("title", "A R C H I V E S"),
                 ("comment", "http://ravepartyradio.org")
                 ],
