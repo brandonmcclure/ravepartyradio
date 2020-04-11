@@ -6,11 +6,17 @@ services:
     ports:
       - "80:80"
       - "443:443"
+      - "8021:8021"
     volumes:
       - "/etc/nginx/vhost.d"
       - "/usr/share/nginx/html"
       - "/var/run/docker.sock:/tmp/docker.sock:ro"
       - "/etc/nginx/certs"
+    environment:
+      - VIRTUAL_HOST=guest.ravepartyradio.org
+      - VIRTUAL_PORT=8021
+      - LETSENCRYPT_HOST=guest.ravepartyradio.org
+      - LETSENCRYPT_EMAIL
     networks:
       - default
       - service-proxy
@@ -46,8 +52,6 @@ services:
       - BROADCAST_PORT_5001_TCP_PORT=5001
       - VIRTUAL_HOST=live.ravepartyradio.org
       - VIRTUAL_PORT=8022
-      - VIRTUAL_HOST=guest.ravepartyradio.org
-      - VIRTUAL_PORT=8021
       - LETSENCRYPT_HOST=live.ravepartyradio.org
       - LETSENCRYPT_EMAIL
     env_file: .env
