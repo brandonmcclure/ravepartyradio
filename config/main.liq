@@ -57,14 +57,15 @@ live_rpr = audio_to_stereo(
 live_guest = audio_to_stereo(
     rewrite_metadata(
         [
-            ("title", "$(title) (LIVE guest)"),
+            ("artist", "Please stand by for the next show"),
+            ("title", "&nbsp;V&nbsp;I&nbsp;R&nbsp;T&nbsp;U&nbsp;A&nbsp;L&nbsp;&nbsp;&nbsp;R&nbsp;A&nbsp;V&nbsp;E&nbsp;"),
             ("comment", "http://ravepartyradio.org")
             ],
         stretch(
             ratio=interactive.float("test", 1.00005),
             input.harbor(
-                "rpr.live",
-                id="rpr.live",
+                "rpr.guest",
+                id="rpr.guest",
                 port=5001,
                 password=my_getenv("LIVE_PASSWORD"),
                 user="source",
