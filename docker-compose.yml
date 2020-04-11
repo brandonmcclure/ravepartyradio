@@ -22,6 +22,7 @@ services:
       - service-proxy
     links:
       - site
+      - main
 
   letsencrypt-nginx-proxy-companion:
     image: jrcs/letsencrypt-nginx-proxy-companion:v1.12
