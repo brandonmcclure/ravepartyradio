@@ -67,7 +67,7 @@ live_guest = audio_to_stereo(
                 "rpr.guest",
                 id="rpr.guest",
                 port=5001,
-                password=my_getenv("LIVE_PASSWORD"),
+                password=my_getenv("GUEST_PASSWORD"),
                 user="source",
                 logfile="/tmp/harbor.log"
                 )
