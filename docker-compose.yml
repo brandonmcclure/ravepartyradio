@@ -12,11 +12,6 @@ services:
       - "/usr/share/nginx/html"
       - "/var/run/docker.sock:/tmp/docker.sock:ro"
       - "/etc/nginx/certs"
-    environment:
-      - VIRTUAL_HOST=guest.ravepartyradio.org
-      - VIRTUAL_PORT=8021
-      - LETSENCRYPT_HOST=guest.ravepartyradio.org
-      - LETSENCRYPT_EMAIL
     networks:
       - default
       - service-proxy
