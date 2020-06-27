@@ -75,74 +75,50 @@
       <div id="status">
          Rave Party Radio 
         </div>
+      <div id="chat">
+          <a href="chat.html" target="_blank">Join the Chat</a>
+      </div>
       <div id="myradiodivcontainer" >
           Loading Player...
       </div>
-  </section>
+</section>
 
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
   <script src="js/nativeflashradiov4.js"></script>
     
   <script>
-    $("#myradiodivcontainer").flashradio({
-    token: "c2J3ZnFic3V6c2JlanAvcHNoAQ==",
-    userinterface: "big",
-    backgroundcolor: "#000000",
-    themecolor: "#e5c00d",
-    themefontcolor: "#63500b",
-    startvolume: "100",
-    radioname: " ",
-    scroll: "auto",
-    autoplay: "false",
-    useanalyzer: "real",
-    analyzertype: "5",
-    usecover: "true",
-    debug: "false",
-    ownsongtitleurl: "https://ravepartyradio.org/song.php",
-    radiocover: "img/smiley_transparent.png",
-    songgooglefontname: "Roboto:700",
-    songfontname: "Roboto",
-    titlegooglefontname: "Roboto:700",
-    titlefontname: "Roboto",
-    streamprefix: "",
-    mountpoint: "/ravepartyradio-192.mp3",
-    radiouid: "",
-    apikey: "",
-    radiojar: "",
-    streamid: "1",
-    streampath: "/live",
-    streamtype: "icecast2",
-    streamurl: "https://icecast.ravepartyradio.org",
-    songinformationinterval: "5000"
-  });
-  </script>
-
-  <!-- Load Facebook SDK for JavaScript -->
-  <div id="fb-root"></div>
-  <script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      xfbml            : true,
-      version          : 'v7.0'
-    });
-  };
-
-  (function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = 'https://connect.facebook.net/en_GB/sdk/xfbml.customerchat.js';
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));</script>
-
-  <!-- Your Chat Plugin code -->
-  <div class="fb-customerchat"
-       attribution=install_email
-       page_id="377914786316233"
-       theme_color="#0084ff"
-       logged_in_greeting="Hi! Welcome to the Rave Party Radio chat. "
-       logged_out_greeting="Hi! Welcome to the Rave Party Radio chat. ">
-  </div>
+  $("#myradiodivcontainer").flashradio({
+	token: "c2J3ZnFic3V6c2JlanAvcHNoAQ==",
+	userinterface: "big",
+	backgroundcolor: "#000000",
+	themecolor: "#e5c00d", 
+	themefontcolor: "#63500b", 
+	startvolume: "100", 
+	radioname: " ",
+	scroll: "auto", 
+	autoplay: "false", 
+	useanalyzer: "real",
+	analyzertype: "5", 
+	usecover: "true", 
+	debug: "false", 
+	ownsongtitleurl: "https://ravepartyradio.org/song.php",
+	radiocover: "img/smiley_transparent.png",
+	songgooglefontname: "Roboto:700",
+	songfontname: "Roboto",
+	titlegooglefontname: "Roboto:700",
+	titlefontname: "Roboto",
+	streamprefix: "",
+	mountpoint: "/ravepartyradio-192.mp3",
+	radiouid: "",
+	apikey: "",
+	radiojar: "",
+	streamid: "1",
+	streampath: "/live",
+	streamtype: "icecast2",
+	streamurl: "https://icecast.ravepartyradio.org",
+	songinformationinterval: "5000"
+});
+</script>
 
 </body>
 </html>
