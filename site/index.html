@@ -47,7 +47,7 @@
   div#chat {
     text-align: center;
   }
-  div#myradiodivcontainer {
+  div#lunaradio {
     width: 100%;
     height: 100%;
   }
@@ -75,47 +75,43 @@
       <div id="chat">
           <a href="https://discord.gg/FM9Yy8Z" target="_blank">chat room</a>
       </div>
-      <div id="myradiodivcontainer" >
+      <div id="lunaradio" >
           Loading Player...
       </div>
 </section>
 
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-  <script src="js/nativeflashradiov4.js"></script>
+  <script src="js/lunaradio.min.js"></script>
     
   <script>
-  $("#myradiodivcontainer").flashradio({
-	token: "c2J3ZnFic3V6c2JlanAvcHNoAQ==",
+$("#lunaradio").lunaradio({
+	token: "XmFVU15aYWVm",
 	userinterface: "big",
 	backgroundcolor: "#000000",
-	themecolor: "#e5c00d", 
-	themefontcolor: "#63500b", 
-	startvolume: "100", 
+	fontcolor: "#e5c00d",
+	hightlightcolor: "#63500b",
+	volume: "100",
+	fontratio: "0.7",
 	radioname: " ",
-	scroll: "auto", 
-	autoplay: "true",
-	useanalyzer: "real",
-	analyzertype: "4",
-	usecover: "true",
-	debug: "false", 
-	ownsongtitleurl: "https://ravepartyradio.org/song.php",
-	radiocover: "img/smiley_transparent.png",
-	songgooglefontname: "Orbitron",
-	songfontname: "Orbitron",
-	titlegooglefontname: "Orbitron",
-	titlefontname: "Orbitron",
-	streamprefix: "",
-	mountpoint: "/ravepartyradio-192.mp3",
-	radiouid: "",
-	apikey: "",
-	radiojar: "",
-	streamid: "1",
-	streampath: "/live",
-	streamtype: "icecast2",
+	scroll: "true",
+	coverimage: "img/smiley_transparent.png",
+	onlycoverimage: "true",
+	coverstyle: "circle",
+	usevisualizer: "real",
+	visualizertype: "4",
+	metadatatechnic: "directly",
+	ownmetadataurl: "",
+	fontname: "Orbitron",
+	googlefont: "Orbitron",
 	streamurl: "https://icecast.ravepartyradio.org",
-	songinformationinterval: "5000"
-});
-</script>
+	streamtype: "icecast2",
+	icecastmountpoint: "/ravepartyradio-192.mp3",
+	streamsuffix: " ",
+	debug: "false",
+	usestreamcorsproxy: "false",
+	corsproxy: "",
+	metadatainterval: "5000",
+});</script>
 
 </body>
 </html>
