@@ -32,7 +32,7 @@ live_rpr = audio_to_stereo(
     rewrite_metadata(
         [
             ("artist", "$(title)"),
-            ("title", "V I R T U A L   R A V E"),
+            ("title", "L I V E"),
             ("comment", "http://ravepartyradio.org")
             ],
         stretch(
@@ -90,7 +90,7 @@ output.icecast(
     mix
     )
 
-file = '%Y-%m-%d %H%M%S - $(if $(artist), "$(artist)", "Unknown Artist") - $(if $(title),"$(title)", "Unknown")'
+file = '%Y-%m-%d %H%M%S - $(cat data/latest.txt)'
 output.file(
     %vorbis,
      reopen_on_metadata=false,
