@@ -92,16 +92,16 @@ output.icecast(
 
 file = '%Y-%m-%d %H%M%S - $(cat data/latest.txt)'
 output.file(
-    %vorbis,
-     reopen_on_metadata=false,
+    %mp3,
+     reopen_on_metadata=true,
      fallible=true,
-     "/playlists/emissions/rpr/"^ file ^".ogg",
+     "/playlists/emissions/rpr/"^ file ^".mp3",
      live_rpr
      )
 output.file(
-    %vorbis,
-     reopen_on_metadata=false,
+    %mp3,
+     reopen_on_metadata=true,
      fallible=true,
-     "/playlists/emissions/guest/"^ file ^".ogg",
+     "/playlists/emissions/guest/"^ file ^".mp3",
      live_guest
      )
