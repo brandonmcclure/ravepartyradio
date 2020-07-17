@@ -39,7 +39,8 @@ services:
       - ./config:/config
       - ./playlists:/playlists
       - ./data:/data
-      - ./timezone:/etc/localtime:ro 
+      - ./timezone:/etc/localtime:ro
+      - /tmp:/tmp
     command: /bin/bash -xc 'env; /supervisor.sh liquidsoap -v --debug /config/main.liq'
     environment:
       - HARBOR_PASSWORD
@@ -63,7 +64,8 @@ services:
     volumes:
       - ./config:/config
       - ./playlists:/playlists
-      - ./timezone:/etc/localtime:ro 
+      - ./timezone:/etc/localtime:ro
+      - /tmp:/tmp
     command: /bin/bash -xc 'env; /supervisor.sh liquidsoap -v --debug /config/broadcast.liq'
     environment:
       - HARBOR_PASSWORD
