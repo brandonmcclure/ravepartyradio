@@ -20,20 +20,14 @@ set("decoding.buffer_length",10.)
 # INPUTS
 archives = mksafe(
     audio_to_stereo(
-        rewrite_metadata(
-            [
-                ("artist", "$(artist) - $(title)"),
-                ("title", "A R C H I V E S"),
-                ("comment", "http://ravepartyradio.org")
-                ],
-            playlist.safe(
-                reload=600,
-                "/playlists/shows",
-                mode="randomize",reload_mode="rounds"
-                )
+        playlist.safe(
+            reload=60,
+            "/playlists/shows",
+            mode="random"
             )
         )
     )
+
 live_rpr = audio_to_stereo(
     rewrite_metadata(
         [

@@ -33,18 +33,11 @@ end
 
 # MIXS
 default=mksafe(
-    rewrite_metadata(
-        [
-            ("artist", "Rave Party Radio"),
-            ("title", "DJ Unknown"),
-            ("comment", "http://ravepartyradio.org")
-            ],
-        audio_to_stereo(
-            playlist.safe(
-                reload=60,
-                "/playlists/shows",
-                mode="random"
-                )
+    audio_to_stereo(
+        playlist.safe(
+            reload=60,
+            "/playlists/shows",
+            mode="random"
             )
         )
     )
