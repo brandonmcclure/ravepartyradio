@@ -12,7 +12,7 @@ set("log.file.path", "/tmp/broadcast.log")
 
 description="Rave Party Radio"
 genre="Electronica"
-url="http://ravepartyradio.org"
+url="https://ravepartyradio.org"
 
 # FUNCTIONS
 icecast_out=output.icecast(description=description, genre=genre, url=url)
