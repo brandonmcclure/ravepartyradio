@@ -57,8 +57,7 @@ services:
     ports:
       - 8022:5002
       - 8023:5001
-      - 127.0.0.1:5000:5000
-  
+
   broadcast:
     image: moul/liquidsoap
     volumes:
