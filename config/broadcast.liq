@@ -6,8 +6,7 @@
 set("log.file", true)
 set("log.stdout", true)
 set("log.level", 4)
-set("server.telnet", true)
-set("server.telnet.port", 5000)
+set("server.telnet", false)
 set("log.file.path", "/tmp/broadcast.log")
 
 description="Rave Party Radio"
