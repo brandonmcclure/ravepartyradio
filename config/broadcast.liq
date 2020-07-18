@@ -1,8 +1,6 @@
 #!/usr/bin/env liquidsoap
 
-
 %include "utils.liq"
-
 
 # CONFIGS
 set("log.file", true)
@@ -11,9 +9,6 @@ set("log.level", 4)
 set("server.telnet", true)
 set("server.telnet.port", 5000)
 set("log.file.path", "/tmp/broadcast.log")
-set("audio.converter.samplerate.libsamplerate.quality","best")
-set("buffering.path","/tmp")
-set("decoding.buffer_length",10.)
 
 description="Rave Party Radio"
 genre="Electronica"
@@ -30,25 +25,11 @@ def outputs(encoder, ~mount, input)
     output_docker_env.icecast(encoder, mount=mount, input)
 end
 
-
-# MIXS
-default=mksafe(
-    audio_to_stereo(
-        playlist.safe(
-            reload=60,
-            "/playlists/shows",
-            mode="random"
-            )
-        )
-    )
-
-harbor_input=input.harbor("rpr.main", port=5001, password=my_getenv("HARBOR_PASSWORD"))
-input=mksafe(fallback(track_sensitive=false, [ harbor_input, default ]))
-
+input=input.harbor("rpr.main", port=5001, password=my_getenv("HARBOR_PASSWORD"))
+input=mksafe(input)
 
 # NORMALIZE
 #input=audio_process(input)
-
 
 # OUTPUTS
 outputs(%mp3(bitrate=192), mount="/ravepartyradio-192.mp3", input)

@@ -1,7 +1,7 @@
 <?php
 
 if ($_ENV['ICECAST_ADMIN_PASSWORD'] != $_GET['auth']) {
-   echo("T'es pas admin !");
+   echo("Not admin!");
    exit;
 }
 
@@ -26,7 +26,7 @@ if ($_ENV['ICECAST_ADMIN_PASSWORD'] != $_GET['auth']) {
          echo '<pre>';
          switch ($_REQUEST['action']) {
            case 'NEXT':
-             echo telnet_send("rscc(dot)main.skip");
+             echo telnet_send("rpr(dot)main.skip");
            break;
            case 'INFO':
              cool_print(get_infos(), 'debug');
@@ -49,14 +49,14 @@ if ($_ENV['ICECAST_ADMIN_PASSWORD'] != $_GET['auth']) {
        ?>
     <table border="1">
       <thead>
-	<th>Artiste</th>
-	<th>Morceau</th>
+	<th>Artist</th>
+	<th>Title</th>
 	<th>Mode</th>
       </thead>
       <?php foreach (get_metadata() as $song) { ?>
       <tr>
 	<td><?php print($song['artist']);?>&nbsp;</td>
-	<td><?php print($song['left_title']);?>&nbsp;</td>
+	<td><?php print($song['title']);?>&nbsp;</td>
 	<td><?php print($song['mode']);?></td>
       </tr>
       <?php } ?>
