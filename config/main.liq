@@ -6,7 +6,7 @@
 set("log.file", true)
 set("log.stdout", true)
 set("log.level", 2)
-set("server.telnet", true)
+set("server.telnet", false)
 set("server.telnet.port", 5000)
 set("server.telnet.bind_addr", "0.0.0.0")
 set("log.file.path", "/tmp/broadcast.log")
