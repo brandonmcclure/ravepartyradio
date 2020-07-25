@@ -51,13 +51,11 @@ if ($_ENV['ICECAST_ADMIN_PASSWORD'] != $_GET['auth']) {
       <thead>
 	<th>Artist</th>
 	<th>Title</th>
-	<th>Mode</th>
       </thead>
       <?php foreach (get_metadata() as $song) { ?>
       <tr>
-	<td><?php print($song['artist']);?>&nbsp;</td>
-	<td><?php print($song['title']);?>&nbsp;</td>
-	<td><?php print($song['mode']);?></td>
+        <td><?php print($song['artist']);?>&nbsp;</td>
+        <td><?php print($song['title']);?>&nbsp;</td>
       </tr>
       <?php } ?>
     </table>

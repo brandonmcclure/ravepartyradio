@@ -73,24 +73,6 @@ function get_metadata() {
     $entries = array();
     for ($i = 1; $i < sizeof($entries_assoc); $i++) {
       $entry = $entries_assoc[$i];
-      $pos = strrpos($entry['title'], '(');
-      $entry['left_title'] = trim(substr($entry['title'], 0, $pos));
-      $entry['right_title'] = substr(trim(substr($entry['title'], $pos)), 1, -1);
-      if (preg_match('/(Rave Party Radio)/', $entry['title'])) {
-        $entry['live'] = 1;
-        $entry['mode'] = 'live';
-        $entry['artist'] = 'Rave Party Radio';
-      } else if (preg_match('/(Rave Party Radio)/', $entry['title'])) {
-        $entry['live'] = 1;
-        $entry['mode'] = 'live';
-        $entry['live_artist'] = 'Rave Party Radio';
-      } else {
-        $mode = explode(' - ', $entry['right_title']);
-        $entry['live'] = 0;
-        if ($mode[0]) {
-          $entry['mode'] = $mode[0];
-        }
-      }
       if (empty($entry['full_title'])) {
         if ($entry['artist'] && $entry['left_title']) {
           $entry['full_title'] = sprintf('%s - %s', $entry['artist'], $entry['left_title']);
