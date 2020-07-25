@@ -41,7 +41,6 @@ services:
       - ./data:/data
       - ./timezone:/etc/localtime:ro
       - ./logs:/logs
-      - /tmp:/tmp
     command: /bin/bash -xc 'env; /supervisor.sh liquidsoap -v --debug /config/main.liq'
     environment:
       - HARBOR_PASSWORD
@@ -66,7 +65,6 @@ services:
       - ./playlists:/playlists
       - ./timezone:/etc/localtime:ro
       - ./logs:/logs
-      - /tmp:/tmp
     command: /bin/bash -xc 'env; /supervisor.sh liquidsoap -v --debug /config/broadcast.liq'
     environment:
       - HARBOR_PASSWORD
@@ -76,6 +74,8 @@ services:
     env_file: .env
     links:
       - icecast
+    ports:
+      - 5000:5000
 
   icecast:
     image: cheekychops/icecast
