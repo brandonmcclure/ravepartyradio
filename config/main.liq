@@ -6,8 +6,10 @@
 set("log.file", true)
 set("log.stdout", true)
 set("log.level", 2)
-set("server.telnet", false)
-set("log.file.path", "/tmp/broadcast.log")
+set("log.file.path", "/tmp/main.log")
+set("server.telnet", true)
+set("server.telnet.port", 5000)
+set("server.telnet.bind_addr", "0.0.0.0")
 
 # INPUTS
 archives = mksafe(
@@ -25,37 +27,38 @@ live_rpr = audio_to_stereo(
         [
             ("artist", "$(title)"),
             ("title", "L I V E"),
-            ("comment", "http://ravepartyradio.org")
+            ("comment", "https://ravepartyradio.org")
             ],
         stretch(
-            ratio=interactive.float("test", 1.00005),
+            ratio=interactive.float("test", 1.00000),
             input.harbor(
                 "rpr.live",
                 id="rpr.live",
                 port=5002,
                 password=my_getenv("LIVE_PASSWORD"),
                 user="source",
-                logfile="/tmp/harbor.log"
+                logfile="/tmp/live.log"
                 )
             )
         )
     )
+
 live_guest = audio_to_stereo(
     rewrite_metadata(
         [
-            ("artist", "Please stand by for the next show"),
-            ("title", "V I R T U A L &nbsp;&nbsp; R A V E"),
-            ("comment", "http://ravepartyradio.org")
+            ("artist", "Please stand by for the next live stream"),
+            ("title", "and drink some water!"),
+            ("comment", "https://ravepartyradio.org")
             ],
         stretch(
-            ratio=interactive.float("test", 1.00005),
+            ratio=interactive.float("test", 1.00000),
             input.harbor(
                 "rpr.guest",
                 id="rpr.guest",
                 port=5001,
                 password=my_getenv("GUEST_PASSWORD"),
                 user="source",
-                logfile="/tmp/harbor.log"
+                logfile="/tmp/guest.log"
                 )
             )
         )
@@ -63,7 +66,7 @@ live_guest = audio_to_stereo(
 
 
 mix = fallback(track_sensitive=false, [live_rpr, live_guest, archives])
-mix = store_metadata(size=20,id="history",mix)
+mix = store_metadata(size=50,id="history",mix)
 def feedback(metadata)
    system("echo "^ quote(metadata["artist"] ^" - "^ metadata["title"]) ^" > /data/latest.txt")
    system("echo "^ quote(metadata["artist"] ^" - "^ metadata["title"]) ^" >> /data/history.txt")
@@ -86,13 +89,6 @@ output.file(
     %mp3,
      reopen_on_metadata=false,
      fallible=true,
-     "/playlists/emissions/rpr/"^ file ^".mp3",
+     "/playlists/live/rpr/" ^ file ^ ".mp3",
      live_rpr
-     )
-output.file(
-    %mp3,
-     reopen_on_metadata=false,
-     fallible=true,
-     "/playlists/emissions/guest/"^ file ^".mp3",
-     live_guest
      )

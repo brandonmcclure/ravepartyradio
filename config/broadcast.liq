@@ -5,9 +5,9 @@
 # CONFIGS
 set("log.file", true)
 set("log.stdout", true)
-set("log.level", 4)
-set("server.telnet", false)
+set("log.level", 2)
 set("log.file.path", "/tmp/broadcast.log")
+set("server.telnet", false)
 
 description="Rave Party Radio"
 genre="Electronica"
