@@ -6,7 +6,7 @@
 set("log.file", true)
 set("log.stdout", true)
 set("log.level", 2)
-set("log.file.path", "/tmp/main.log")
+set("log.file.path", "/logs/main.log")
 set("server.telnet", true)
 set("server.telnet.port", 5000)
 set("server.telnet.bind_addr", "0.0.0.0")
@@ -37,7 +37,7 @@ live_rpr = audio_to_stereo(
                 port=5002,
                 password=my_getenv("LIVE_PASSWORD"),
                 user="source",
-                logfile="/tmp/live.log"
+                logfile="/logs/live.log"
                 )
             )
         )
@@ -58,7 +58,7 @@ live_guest = audio_to_stereo(
                 port=5001,
                 password=my_getenv("GUEST_PASSWORD"),
                 user="source",
-                logfile="/tmp/guest.log"
+                logfile="/logs/guest.log"
                 )
             )
         )
