@@ -78,7 +78,7 @@ services:
       - 5000:5000
 
   icecast:
-    image: cheekychops/icecast
+    image: stephanel/icecast-kh
     volumes:
       - ./logs/icecast2:/var/log/icecast2
       - ./timezone:/etc/localtime:ro 
@@ -94,6 +94,8 @@ services:
       - ICECAST_ADMIN_PASSWORD
       - ICECAST_PASSWORD
       - ICECAST_RELAY_PASSWORD
+      - ICECAST_ADMIN=smithcolina@hotmail.com
+      - ICECAST_HOSTNAME=icecast.ravepartyradio.org
     env_file: .env
     ports:
       - 8000:8000
