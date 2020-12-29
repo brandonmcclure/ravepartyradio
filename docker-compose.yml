@@ -31,6 +31,8 @@ services:
       - admin
     volumes_from:
       - nginx-proxy
+    environment:
+      - ACME_CA_URI=https://acme-staging.api.letsencrypt.org/directory
 
   main:
     image: moul/liquidsoap
