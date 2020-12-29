@@ -20,7 +20,7 @@ services:
       - main
 
   letsencrypt-nginx-proxy-companion:
-    image: jrcs/letsencrypt-nginx-proxy-companion:v1.12
+    image: jrcs/letsencrypt-nginx-proxy-companion:v2.0.2
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     depends_on:
@@ -32,7 +32,7 @@ services:
     volumes_from:
       - nginx-proxy
     environment:
-      - ACME_CA_URI=https://acme-staging.api.letsencrypt.org/directory
+      - ACME_CA_URI=https://acme-staging-v02.api.letsencrypt.org/directory
 
   main:
     image: moul/liquidsoap
