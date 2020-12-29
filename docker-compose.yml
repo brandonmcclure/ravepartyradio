@@ -40,7 +40,6 @@ services:
       - ./data:/data
       - ./timezone:/etc/localtime:ro
       - ./logs/main:/logs
-      - ./logs/main:/tmp
     command: /bin/bash -xc 'env; /supervisor.sh liquidsoap -v --debug /config/main.liq'
     environment:
       - HARBOR_PASSWORD
@@ -65,7 +64,6 @@ services:
       - ./playlists:/playlists
       - ./timezone:/etc/localtime:ro
       - ./logs/broadcast:/logs
-      - ./logs/broadcast:/tmp
     command: /bin/bash -xc 'env; /supervisor.sh liquidsoap -v --debug /config/broadcast.liq'
     environment:
       - HARBOR_PASSWORD
