@@ -96,6 +96,7 @@ services:
       - ICECAST_RELAY_PASSWORD
       - ICECAST_ADMIN=smithcolina@hotmail.com
       - ICECAST_HOSTNAME=icecast.ravepartyradio.org
+      - ICECAST_LOCATION=London (UK)
     env_file: .env
     ports:
       - 8000:8000
@@ -141,7 +142,7 @@ services:
       - main
 
   site:
-    image: tutum/apache-php
+    image: library/httpd:2.4
     ports:
       - 8181:80
     environment:
@@ -151,7 +152,9 @@ services:
       - LETSENCRYPT_EMAIL
     env_file: .env
     volumes:
-      - ./site:/app
+      - ./logs/apache2:/private/var/log/apache2
+      - ./site:/usr/local/apache2/htdocs/
+      - ./data:/usr/local/apache2/htdocs/data/
     networks:
       - default
       - service-proxy
