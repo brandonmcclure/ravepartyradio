@@ -101,24 +101,6 @@ services:
     ports:
       - 8000:8000
     restart: always
-  
-  ftp:
-    image: httpd
-    ports:
-      - 8024:80
-    volumes:
-      - ./playlists:/usr/local/apache2/htdocs/playlists
-      - ./trucs:/usr/local/apache2/htdocs/trucs
-      - ./data:/usr/local/apache2/htdocs/data
-    networks:
-      - default
-      - service-proxy
-    environment:
-      - VIRTUAL_HOST=ftp.ravepartyradio.org
-      - VIRTUAL_PORT=8024
-      - LETSENCRYPT_HOST=ftp.ravepartyradio.org
-      - LETSENCRYPT_EMAIL
-    env_file: .env
 
   admin:
     image: tutum/apache-php
