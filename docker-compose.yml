@@ -20,7 +20,7 @@ services:
       - main
 
   letsencrypt-nginx-proxy-companion:
-    image: jrcs/letsencrypt-nginx-proxy-companion:v2.0.2
+    image: jrcs/letsencrypt-nginx-proxy-companion:2.0.2
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     depends_on:
