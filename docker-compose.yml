@@ -1,8 +1,23 @@
 version: '2'
 
 services:
+
+  echo:
+    image: mendhak/http-https-echo:16
+    ports:
+      - "8888:8888"
+      - "9999:9999"
+    networks:
+      - default
+      - service-proxy
+    environment:
+      - HTTP_PORT=8888
+      - HTTPS_PORT=9999
+      - VIRTUAL_HOST=echo.ravepartyradio.org
+      - VIRTUAL_PORT=8888
+
   nginx-proxy:
-    image: jwilder/nginx-proxy
+    image: cheekychops/nginx-proxy
     ports:
       - "80:80"
       - "443:443"
@@ -12,15 +27,18 @@ services:
       - "/usr/share/nginx/html"
       - "/var/run/docker.sock:/tmp/docker.sock:ro"
       - "/etc/nginx/certs"
+      - "./logs/nginx:/var/log/nginx"
     networks:
       - default
       - service-proxy
     links:
       - site
       - main
+      - echo
+      - icecast
 
   letsencrypt-nginx-proxy-companion:
-    image: jrcs/letsencrypt-nginx-proxy-companion:2.0.2
+    image: jrcs/letsencrypt-nginx-proxy-companion
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     depends_on:
@@ -29,10 +47,9 @@ services:
       - site
       - main
       - admin
+      - echo
     volumes_from:
       - nginx-proxy
-    environment:
-      - ACME_CA_URI=https://acme-staging-v02.api.letsencrypt.org/directory
 
   main:
     image: moul/liquidsoap
@@ -79,9 +96,9 @@ services:
       - 5000:5000
 
   icecast:
-    image: stephanel/icecast-kh
+    image: cheekychops/docker-icecast
     volumes:
-      - ./logs/icecast2:/var/log/icecast2
+      - ./logs/icecast:/var/log/icecast
       - ./timezone:/etc/localtime:ro 
     networks:
       - default
@@ -98,6 +115,10 @@ services:
       - ICECAST_ADMIN=smithcolina@hotmail.com
       - ICECAST_HOSTNAME=icecast.ravepartyradio.org
       - ICECAST_LOCATION=London (UK)
+      - ICECAST_MAX_SOURCES=2
+      - ICECAST_MAX_LISTENERS=1000
+      - ICECAST_X_FORWARDED_FOR=*
+      - ICECAST_LOG_LEVEL=4
     env_file: .env
     ports:
       - 8000:8000
