@@ -46,6 +46,7 @@ services:
       - icecast
       - site
       - main
+      - admin
       - echo
     volumes_from:
       - nginx-proxy
