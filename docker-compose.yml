@@ -17,7 +17,7 @@ services:
       - VIRTUAL_PORT=8888
 
   nginx-proxy:
-    image: jwilder/nginx-proxy
+    image: cheekychops/nginx-proxy
     ports:
       - "80:80"
       - "443:443"
@@ -27,6 +27,7 @@ services:
       - "/usr/share/nginx/html"
       - "/var/run/docker.sock:/tmp/docker.sock:ro"
       - "/etc/nginx/certs"
+      - "./logs/nginx:/var/log/nginx"
     networks:
       - default
       - service-proxy
