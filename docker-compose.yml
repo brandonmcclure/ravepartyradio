@@ -1,6 +1,21 @@
 version: '2'
 
 services:
+
+  echo:
+    image: mendhak/http-https-echo:16
+    ports:
+      - "8888:8888"
+      - "9999:9999"
+    networks:
+      - default
+      - service-proxy
+    environment:
+      - HTTP_PORT=8888
+      - HTTPS_PORT=9999
+      - VIRTUAL_HOST=echo.ravepartyradio.org
+      - VIRTUAL_PORT=8888
+
   nginx-proxy:
     image: jwilder/nginx-proxy
     ports:
@@ -34,18 +49,6 @@ services:
       - nginx-proxy
     environment:
       - ACME_CA_URI=https://acme-staging-v02.api.letsencrypt.org/directory
-
-  echo:
-    image: mendhak/http-https-echo:16
-    ports:
-      - "8888:8888"
-      - "9999:9999"
-    networks:
-      - default
-      - service-proxy
-    environment:
-      - HTTP_PORT=8888
-      - HTTPS_PORT=9999
 
   main:
     image: moul/liquidsoap
