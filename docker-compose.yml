@@ -34,6 +34,7 @@ services:
       - site
       - main
       - echo
+      - icecast
 
   letsencrypt-nginx-proxy-companion:
     image: jrcs/letsencrypt-nginx-proxy-companion
@@ -93,7 +94,7 @@ services:
       - 5000:5000
 
   icecast:
-    image: cheekychops/docker-icecast:latest
+    image: cheekychops/docker-icecast
     volumes:
       - ./logs/icecast:/var/log/icecast
       - ./timezone:/etc/localtime:ro 
