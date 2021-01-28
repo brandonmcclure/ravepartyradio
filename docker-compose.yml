@@ -102,8 +102,8 @@ services:
       - ICECAST_LOCATION=London (UK)
       - ICECAST_MAX_SOURCES=2
       - ICECAST_MAX_LISTENERS=1000
-      - ICECAST_X_FORWARDED_FOR=*
-      - ICECAST_LOG_LEVEL=4
+      - ICECAST_X_FORWARDED_FOR=*.*.*.*
+      - ICECAST_LOG_LEVEL=3
     env_file: .env
     ports:
       - 8000:8000
