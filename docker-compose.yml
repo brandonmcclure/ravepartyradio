@@ -20,7 +20,6 @@ services:
     links:
       - site
       - main
-      - echo
       - icecast
 
   letsencrypt-nginx-proxy-companion:
