@@ -103,8 +103,7 @@ services:
       - ICECAST_MAX_LISTENERS=1000
       - ICECAST_X_FORWARDED_FOR=*.*.*.*
       - ICECAST_LOG_LEVEL=3
-      - ICECAST_LISTEN_SOCKET=8000
-      - ICECAST_YP_URL=https://icecast.ravepartyradio.org
+      - ICECAST_YP_URL=http://icecast-yp.internet-radio.com
     env_file: .env
     ports:
       - 8000:8000
