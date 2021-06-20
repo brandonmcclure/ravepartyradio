@@ -8,6 +8,7 @@ services:
       - "80:80"
       - "443:443"
       - "8121:8021"
+      - "8000:8000"
     volumes:
       - "/etc/nginx/vhost.d"
       - "/usr/share/nginx/html"
@@ -105,8 +106,6 @@ services:
       - ICECAST_LOG_LEVEL=3
       - ICECAST_YP_URL=http://icecast-yp.internet-radio.com
     env_file: .env
-    ports:
-      - 8000:8000
     restart: always
 
   admin:
