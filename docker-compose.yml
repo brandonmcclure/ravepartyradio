@@ -3,12 +3,11 @@ version: '2'
 services:
 
   nginx-proxy:
-    image: cheekychops/nginx-proxy
+    image: nginxproxy/nginx-proxy
     ports:
       - "80:80"
       - "443:443"
       - "8121:8021"
-      - "8000:8000"
     volumes:
       - "/etc/nginx/vhost.d"
       - "/usr/share/nginx/html"
@@ -23,9 +22,11 @@ services:
       - main
       - icecast
 
-  letsencrypt-nginx-proxy-companion:
-    image: jrcs/letsencrypt-nginx-proxy-companion
+  acme-companion:
+    image: nginxproxy/acme-companion
     volumes:
+      - "/etc/nginx/certs"
+      - "/etc/acme.sh"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     depends_on:
       - nginx-proxy
@@ -35,6 +36,7 @@ services:
       - admin
     volumes_from:
       - nginx-proxy
+    env_file: .env
 
   main:
     image: moul/liquidsoap
