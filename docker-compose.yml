@@ -1,5 +1,13 @@
 version: '2'
 
+volumes:
+  conf:
+  vhost:
+  html:
+  dhparam:
+  certs:
+  acme:
+
 services:
 
   nginx-proxy:
@@ -9,28 +17,21 @@ services:
       - "443:443"
       - "8121:8021"
     volumes:
-      - "/etc/nginx/vhost.d"
-      - "/usr/share/nginx/html"
-      - "/var/run/docker.sock:/tmp/docker.sock:ro"
-      - "./certs:/etc/nginx/certs"
-      - "./logs/nginx:/var/log/nginx"
-    networks:
-      - default
-      - service-proxy
-    links:
-      - site
-      - main
-      - icecast
-      - admin
-    labels:
-      com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: "true"
+      - ./nginx/conf:/etc/nginx/conf.d
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - dhparam:/etc/nginx/dhparam
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./certs:/etc/nginx/certs:ro
+      - ./logs/nginx:/var/log/nginx
+    network_mode: bridge
 
   acme-companion:
     image: nginxproxy/acme-companion
     volumes:
-      - "./certs:/etc/nginx/certs"
-      - "/etc/acme.sh"
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - ./certs:/etc/nginx/certs
+      - acme:/etc/acme.sh
+      - /var/run/docker.sock:/var/run/docker.sock:ro
     depends_on:
       - nginx-proxy
       - icecast
@@ -40,6 +41,7 @@ services:
     volumes_from:
       - nginx-proxy
     env_file: .env
+    network_mode: bridge
 
   main:
     image: moul/liquidsoap
@@ -90,9 +92,7 @@ services:
     volumes:
       - ./logs/icecast:/var/log/icecast
       - ./timezone:/etc/localtime:ro 
-    networks:
-      - default
-      - service-proxy
+    network_mode: bridge
     environment:
       - VIRTUAL_HOST=${ICECAST_HOST}
       - VIRTUAL_PORT=8000
@@ -103,7 +103,7 @@ services:
       - ICECAST_PASSWORD
       - ICECAST_RELAY_PASSWORD
       - ICECAST_ADMIN=smithcolina@hotmail.com
-      - ICECAST_HOSTNAME=icecast.ravepartyradio.org
+      - ICECAST_HOSTNAME=${ICECAST_HOST}
       - ICECAST_LOCATION=London (UK)
       - ICECAST_MAX_SOURCES=2
       - ICECAST_MAX_LISTENERS=1000
@@ -120,9 +120,6 @@ services:
     volumes:
       - ./timezone:/etc/localtime:ro
       - ./admin:/app
-    networks:
-      - default
-      - service-proxy
     environment:
       - VIRTUAL_HOST=${ADMIN_HOST}
       - VIRTUAL_PORT=8080
@@ -148,10 +145,3 @@ services:
       - ./logs/apache2:/private/var/log/apache2
       - ./site:/usr/local/apache2/htdocs/
       - ./data:/usr/local/apache2/htdocs/data/
-    networks:
-      - default
-      - service-proxy
-
-networks:
-  service-proxy:
-    external: true
