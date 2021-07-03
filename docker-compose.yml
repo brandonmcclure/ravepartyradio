@@ -151,3 +151,4 @@ services:
 
 networks:
   service-proxy:
+    external: true
