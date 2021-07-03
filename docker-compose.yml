@@ -12,7 +12,7 @@ services:
       - "/etc/nginx/vhost.d"
       - "/usr/share/nginx/html"
       - "/var/run/docker.sock:/tmp/docker.sock:ro"
-      - "/etc/nginx/certs"
+      - "./certs:/etc/nginx/certs"
       - "./logs/nginx:/var/log/nginx"
     networks:
       - default
@@ -25,7 +25,7 @@ services:
   acme-companion:
     image: nginxproxy/acme-companion
     volumes:
-      - "/etc/nginx/certs"
+      - "./certs:/etc/nginx/certs"
       - "/etc/acme.sh"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     depends_on:
