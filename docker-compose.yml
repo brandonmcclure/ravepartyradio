@@ -55,9 +55,9 @@ services:
       - LIVE_PASSWORD
       - BROADCAST_PORT_5001_TCP_ADDR=broadcast
       - BROADCAST_PORT_5001_TCP_PORT=5001
-      - VIRTUAL_HOST=live.ravepartyradio.org
+      - VIRTUAL_HOST=${LIVE_HOST}
       - VIRTUAL_PORT=8022
-      - LETSENCRYPT_HOST=live.ravepartyradio.org
+      - LETSENCRYPT_HOST=${LIVE_HOST}
       - LETSENCRYPT_EMAIL
     env_file: .env
     links:
@@ -94,9 +94,9 @@ services:
       - default
       - service-proxy
     environment:
-      - VIRTUAL_HOST=icecast.ravepartyradio.org
+      - VIRTUAL_HOST=${ICECAST_HOST}
       - VIRTUAL_PORT=8000
-      - LETSENCRYPT_HOST=icecast.ravepartyradio.org
+      - LETSENCRYPT_HOST=${ICECAST_HOST}
       - LETSENCRYPT_EMAIL
       - ICECAST_SOURCE_PASSWORD
       - ICECAST_ADMIN_PASSWORD
@@ -124,9 +124,9 @@ services:
       - default
       - service-proxy
     environment:
-      - VIRTUAL_HOST=admin.ravepartyradio.org
+      - VIRTUAL_HOST=${ADMIN_HOST}
       - VIRTUAL_PORT=8080
-      - LETSENCRYPT_HOST=admin.ravepartyradio.org
+      - LETSENCRYPT_HOST=${ADMIN_HOST}
       - LETSENCRYPT_EMAIL
       - ICECAST_ADMIN_PASSWORD
       - MAIN_PORT_5000_TCP=tcp://main:5000
@@ -139,9 +139,9 @@ services:
     ports:
       - 8181:80
     environment:
-      - VIRTUAL_HOST=ravepartyradio.org,www.ravepartyradio.org
+      - VIRTUAL_HOST=${SITE_HOST}
       - VIRTUAL_PORT=8181
-      - LETSENCRYPT_HOST=ravepartyradio.org,www.ravepartyradio.org
+      - LETSENCRYPT_HOST=${SITE_HOST}
       - LETSENCRYPT_EMAIL
     env_file: .env
     volumes:
