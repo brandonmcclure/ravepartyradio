@@ -1,5 +1,8 @@
 version: '2'
 
+networks:
+  service-proxy:
+
 volumes:
   conf:
   vhost:
@@ -11,7 +14,7 @@ volumes:
 services:
 
   nginx-proxy:
-    image: nginxproxy/nginx-proxy
+    image: jwilder/nginx-proxy
     ports:
       - "80:80"
       - "443:443"
@@ -24,7 +27,9 @@ services:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./certs:/etc/nginx/certs:ro
       - ./logs/nginx:/var/log/nginx
-    network_mode: bridge
+    networks:
+      - service-proxy
+      - default
 
   acme-companion:
     image: nginxproxy/acme-companion
@@ -41,7 +46,9 @@ services:
     volumes_from:
       - nginx-proxy
     env_file: .env
-    network_mode: bridge
+    networks:
+      - service-proxy
+      - default
 
   main:
     image: moul/liquidsoap
@@ -92,7 +99,6 @@ services:
     volumes:
       - ./logs/icecast:/var/log/icecast
       - ./timezone:/etc/localtime:ro 
-    network_mode: bridge
     environment:
       - VIRTUAL_HOST=${ICECAST_HOST}
       - VIRTUAL_PORT=8000
@@ -112,6 +118,9 @@ services:
       - ICECAST_YP_URL=http://icecast-yp.internet-radio.com
     env_file: .env
     restart: always
+    networks:
+      - service-proxy
+      - default
 
   admin:
     image: tutum/apache-php
@@ -130,6 +139,9 @@ services:
     env_file: .env
     links:
       - main
+    networks:
+      - service-proxy
+      - default
 
   site:
     image: library/httpd:2.4
@@ -145,3 +157,7 @@ services:
       - ./logs/apache2:/private/var/log/apache2
       - ./site:/usr/local/apache2/htdocs/
       - ./data:/usr/local/apache2/htdocs/data/
+    networks:
+      - service-proxy
+      - default
+
