@@ -4,28 +4,30 @@ networks:
   service-proxy:
 
 volumes:
-  conf:
-  vhost:
   html:
   dhparam:
-  certs:
   acme:
+  certs:
+  vhost:
 
 services:
 
   nginx-proxy:
-    image: jwilder/nginx-proxy
+    image: nginxproxy/nginx-proxy:0.8.0
     ports:
       - "80:80"
       - "443:443"
       - "8121:8021"
+    environment:
+      - DEFAULT_HOST=www.ravepartyradio.org
     volumes:
       - ./nginx/conf:/etc/nginx/conf.d
       - vhost:/etc/nginx/vhost.d
       - html:/usr/share/nginx/html
       - dhparam:/etc/nginx/dhparam
+      - acme:/etc/acme.sh
       - /var/run/docker.sock:/tmp/docker.sock:ro
-      - ./certs:/etc/nginx/certs:ro
+      - certs:/etc/nginx/certs:ro
       - ./logs/nginx:/var/log/nginx
     networks:
       - service-proxy
@@ -34,7 +36,7 @@ services:
   acme-companion:
     image: nginxproxy/acme-companion
     volumes:
-      - ./certs:/etc/nginx/certs
+      - certs:/etc/nginx/certs:rw
       - acme:/etc/acme.sh
       - /var/run/docker.sock:/var/run/docker.sock:ro
     depends_on:
@@ -58,6 +60,7 @@ services:
       - ./data:/data
       - ./timezone:/etc/localtime:ro
       - ./logs:/logs
+      - ./tmp:/tmp
     command: /bin/bash -xc 'env; /supervisor.sh liquidsoap -v --debug /config/main.liq'
     environment:
       - HARBOR_PASSWORD
@@ -72,8 +75,8 @@ services:
     links:
       - broadcast
     ports:
-      - 8022:5002
-      - 8023:5001
+      - "8022:5002"
+      - "8023:5001"
 
   broadcast:
     image: moul/liquidsoap
@@ -92,7 +95,7 @@ services:
     links:
       - icecast
     ports:
-      - 5000:5000
+      - "5000:5000"
 
   icecast:
     image: cheekychops/docker-icecast
@@ -121,11 +124,13 @@ services:
     networks:
       - service-proxy
       - default
+    ports:
+      - "8000:8000"
 
   admin:
     image: tutum/apache-php
     ports:
-      - 8080:80
+      - "8080:80"
     volumes:
       - ./timezone:/etc/localtime:ro
       - ./admin:/app
@@ -146,12 +151,12 @@ services:
   site:
     image: library/httpd:2.4
     ports:
-      - 8181:80
+      - "8181:80"
     environment:
-      - VIRTUAL_HOST=${SITE_HOST}
-      - VIRTUAL_PORT=8181
-      - LETSENCRYPT_HOST=${SITE_HOST}
-      - LETSENCRYPT_EMAIL
+      - "VIRTUAL_HOST=${SITE_HOST}"
+      - "VIRTUAL_PORT=8181"
+      - "LETSENCRYPT_HOST=${SITE_HOST}"
+      - "LETSENCRYPT_EMAIL"
     env_file: .env
     volumes:
       - ./logs/apache2:/private/var/log/apache2
