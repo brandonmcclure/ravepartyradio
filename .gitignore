@@ -2,10 +2,12 @@
 *~
 *#
 .#*
-/certbot/
-/playlists/
-
-/logs/
+playlists
+data
+admin/metadata.cache
+nginx/conf/default.conf
+logs
+tmp
 *.zip
 .idea
 .DS_Store
