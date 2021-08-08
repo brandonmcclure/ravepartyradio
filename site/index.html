@@ -49,13 +49,6 @@
     width: 100%;
     height: 80%;
   }
-  div#status {
-    text-align: center;
-    color: #e5c00d;
-    font-size: 28px;
-    font-family: Orbitron,sans-serif;
-    font-weight: bold;
-  }
   div#chat {
     text-align: center;
   }
@@ -81,9 +74,6 @@
 <body>
 
   <section id="wrapper">
-      <div id="status">
-         ravepartyradio.org
-        </div>
       <div id="chat">
         <a href="https://discord.gg/FM9Yy8Z" target="_blank">Chat Rooms</a>
       </div>
@@ -106,14 +96,15 @@ $("#lunaradio").lunaradio({
 	fontcolor: "#e5c00d",
 	hightlightcolor: "#e5c00d",
 	volume: "100",
-	fontratio: "0.25",
-	radioname: "The Lockdown Sessions",
+	fontratio: "0.4",
+	radioname: "ravepartyradio.org",
+        autoplay: "true",
 	scroll: "true",
 	coverimage: "img/smiley_transparent.png",
 	onlycoverimage: "true",
 	coverstyle: "circle",
 	usevisualizer: "real",
-	visualizertype: "7",
+	visualizertype: "2",
 	metadatatechnic: "ownmetadataurl",
 	ownmetadataurl: "data/latest.txt",
 	fontname: "Orbitron",
@@ -126,8 +117,8 @@ $("#lunaradio").lunaradio({
 	usestreamcorsproxy: "false",
 	corsproxy: "",
 	metadatainterval: "5000",
-  displayliveicon: "false",
-  displayvisualizericon: "false"
-});</script>
+        displayliveicon: "false",
+        displayvisualizericon: "false"
+}),play();</script>
 
 </body>
