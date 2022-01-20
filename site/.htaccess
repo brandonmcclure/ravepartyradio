@@ -1,6 +1,14 @@
 # Apache Server Configs v3.0.0 | MIT License
 # https://github.com/h5bp/server-configs-apache
 
+<Directory /data>
+  Header Set Pragma "no-cache"
+  Header Set Expires "Thu, 1 Jan 1970 00:00:00 GMT"
+  Header Set Cache-Control "max-age=0, no-store, no-cache, must-revalidate"
+  Header Unset ETag
+  FileETag None
+</Directory>
+
 # (!) Using `.htaccess` files slows down Apache, therefore, if you have
 # access to the main server configuration file (which is usually called
 # `httpd.conf`), you should add this logic there.
