@@ -1,25 +1,25 @@
 version: '2'
 
-networks:
-  service-proxy:
-
 volumes:
   html:
   dhparam:
   acme:
-  certs:
   vhost:
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
 
 services:
 
   nginx-proxy:
-    image: nginxproxy/nginx-proxy:0.8.0
+    image: nginxproxy/nginx-proxy
     ports:
       - "80:80"
       - "443:443"
       - "8121:8021"
-    environment:
-      - DEFAULT_HOST=www.ravepartyradio.org
     volumes:
       - ./nginx/conf:/etc/nginx/conf.d
       - vhost:/etc/nginx/vhost.d
@@ -27,16 +27,16 @@ services:
       - dhparam:/etc/nginx/dhparam
       - acme:/etc/acme.sh
       - /var/run/docker.sock:/tmp/docker.sock:ro
-      - certs:/etc/nginx/certs:ro
+      - ./certs:/etc/nginx/certs:ro
       - ./logs/nginx:/var/log/nginx
     networks:
-      - service-proxy
-      - default
+      - frontend
+      - backend
 
   acme-companion:
     image: nginxproxy/acme-companion
     volumes:
-      - certs:/etc/nginx/certs:rw
+      - ./certs:/etc/nginx/certs:rw
       - acme:/etc/acme.sh
       - /var/run/docker.sock:/var/run/docker.sock:ro
     depends_on:
@@ -49,8 +49,8 @@ services:
       - nginx-proxy
     env_file: .env
     networks:
-      - service-proxy
-      - default
+      - frontend
+      - backend
 
   main:
     image: moul/liquidsoap
@@ -59,7 +59,6 @@ services:
       - ./playlists:/playlists
       - ./data:/data
       - ./timezone:/etc/localtime:ro
-      - ./logs:/logs
       - ./tmp:/tmp
     command: /bin/bash -xc 'env; /supervisor.sh liquidsoap -v --debug /config/main.liq'
     environment:
@@ -77,6 +76,8 @@ services:
     ports:
       - "8022:5002"
       - "8023:5001"
+    networks:
+      - backend
 
   broadcast:
     image: moul/liquidsoap
@@ -84,7 +85,6 @@ services:
       - ./config:/config
       - ./playlists:/playlists
       - ./timezone:/etc/localtime:ro
-      - ./logs:/logs
     command: /bin/bash -xc 'env; /supervisor.sh liquidsoap -v --debug /config/broadcast.liq'
     environment:
       - HARBOR_PASSWORD
@@ -96,6 +96,8 @@ services:
       - icecast
     ports:
       - "5000:5000"
+    networks:
+      - backend
 
   icecast:
     image: cheekychops/docker-icecast
@@ -121,22 +123,19 @@ services:
       - ICECAST_YP_URL=http://icecast-yp.internet-radio.com
     env_file: .env
     restart: always
-    networks:
-      - service-proxy
-      - default
     ports:
       - "8000:8000"
+    networks:
+      - frontend
+      - backend
 
   admin:
-    image: tutum/apache-php
-    ports:
-      - "8080:80"
+    image: php:7.2-apache
     volumes:
       - ./timezone:/etc/localtime:ro
-      - ./admin:/app
+      - ./admin:/var/www/html/
     environment:
       - VIRTUAL_HOST=${ADMIN_HOST}
-      - VIRTUAL_PORT=8080
       - LETSENCRYPT_HOST=${ADMIN_HOST}
       - LETSENCRYPT_EMAIL
       - ICECAST_ADMIN_PASSWORD
@@ -145,24 +144,21 @@ services:
     links:
       - main
     networks:
-      - service-proxy
-      - default
+      - frontend
+      - backend
 
   site:
-    image: library/httpd:2.4
-    ports:
-      - "8181:80"
+    image: httpd
     environment:
-      - "VIRTUAL_HOST=${SITE_HOST}"
-      - "VIRTUAL_PORT=8181"
-      - "LETSENCRYPT_HOST=${SITE_HOST}"
-      - "LETSENCRYPT_EMAIL"
+      - VIRTUAL_HOST=${SITE_HOST}
+      - LETSENCRYPT_HOST=${SITE_HOST}
+      - LETSENCRYPT_EMAIL
     env_file: .env
     volumes:
       - ./logs/apache2:/private/var/log/apache2
       - ./site:/usr/local/apache2/htdocs/
       - ./data:/usr/local/apache2/htdocs/data/
     networks:
-      - service-proxy
-      - default
+      - frontend
+      - backend
 
