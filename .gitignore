@@ -4,6 +4,7 @@
 .#*
 playlists
 data
+certs
 admin/metadata.cache
 nginx/conf/default.conf
 logs
