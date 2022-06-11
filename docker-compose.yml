@@ -122,6 +122,7 @@ services:
       - ICECAST_X_FORWARDED_FOR=*.*.*.*
       - ICECAST_LOG_LEVEL=3
       - ICECAST_YP_URL=http://icecast-yp.internet-radio.com
+      - HTTPS_METHOD=noredirect
     env_file: .env
     restart: always
     ports:
